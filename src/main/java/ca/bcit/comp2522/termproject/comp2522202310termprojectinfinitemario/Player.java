@@ -12,6 +12,14 @@ public class Player extends Box implements Moves {
         alive = DEFAULT_STATUS;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(final boolean alive) {
+        this.alive = alive;
+    }
+
     @Override
     public void move() {
 
