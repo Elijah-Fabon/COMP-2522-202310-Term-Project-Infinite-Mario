@@ -6,4 +6,16 @@ public class Pit extends Obstacle {
                  final double newY) {
         super(newX, newY);
     }
+
+    private class Spikes extends Obstacle implements Dangerous {
+
+        public Spikes(final double newX, final double newY) {
+            super(newX, newY);
+        }
+
+        @Override
+        public void kill(final Player player) {
+
+        }
+    }
 }
