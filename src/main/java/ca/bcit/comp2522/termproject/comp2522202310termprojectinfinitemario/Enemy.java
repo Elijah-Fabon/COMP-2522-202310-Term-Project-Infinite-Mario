@@ -10,7 +10,7 @@ public class Enemy extends Obstacle implements Dangerous, Moves {
 
     @Override
     public void kill(final Player player) {
-
+        player.setAlive(false);
     }
 
     @Override

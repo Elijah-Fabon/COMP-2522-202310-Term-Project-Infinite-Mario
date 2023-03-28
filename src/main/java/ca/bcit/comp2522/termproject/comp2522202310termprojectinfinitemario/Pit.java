@@ -16,7 +16,7 @@ public class Pit extends Obstacle {
 
         @Override
         public void kill(final Player player) {
-
+            player.setAlive(false);
         }
     }
 }
