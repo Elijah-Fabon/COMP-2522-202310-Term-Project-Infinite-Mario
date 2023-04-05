@@ -1,10 +1,9 @@
 package ca.bcit.comp2522.termproject.comp2522202310termprojectinfinitemario;
 
-public class Plateau extends Obstacle {
+public class Plateau extends Ground {
 
     public Plateau(final double newX,
-                 final double newY,
-                   final ObstacleSize newObstacleSize) {
-        super(newX, newY, newObstacleSize);
+                 final double newY) {
+        super(newX, newY);
     }
 }

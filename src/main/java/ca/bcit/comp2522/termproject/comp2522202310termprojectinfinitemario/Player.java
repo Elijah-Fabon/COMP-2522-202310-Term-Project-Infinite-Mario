@@ -1,6 +1,8 @@
 package ca.bcit.comp2522.termproject.comp2522202310termprojectinfinitemario;
 
-public class Player extends Box implements Moves {
+import javafx.scene.shape.Rectangle;
+
+public class Player extends Rectangle {
 
     private static final boolean DEFAULT_STATUS = true;
 
@@ -20,8 +22,4 @@ public class Player extends Box implements Moves {
         this.alive = alive;
     }
 
-    @Override
-    public void move() {
-
-    }
 }
