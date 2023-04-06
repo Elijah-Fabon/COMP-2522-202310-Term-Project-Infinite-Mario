@@ -70,7 +70,7 @@ public class Controller implements Initializable {
         time++;
         gameTime++;
         double yDeltaDown = 0.06;
-        double yDeltaUp = -55;
+        double yDeltaUp = -65;
         if (playerObject.isJumping()) {
             movePlayerY(yDeltaUp / time);
             if (player.getY() < playerJumpY) {
