@@ -32,7 +32,7 @@ public class Controller implements Initializable {
     private Ground groundHandler;
     ArrayList<Rectangle> rectangles = new ArrayList<>();
     ArrayList<Line> lines = new ArrayList<>();
-    int jumpHeight = 250;
+    int jumpHeight = 300;
     double playerJumpY;
 
 
