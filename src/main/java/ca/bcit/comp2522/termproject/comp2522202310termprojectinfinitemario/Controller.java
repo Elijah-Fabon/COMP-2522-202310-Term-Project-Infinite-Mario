@@ -11,6 +11,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -31,12 +32,13 @@ public class Controller implements Initializable {
     private Ground groundHandler;
     ArrayList<Rectangle> rectangles = new ArrayList<>();
     ArrayList<Line> lines = new ArrayList<>();
+    int jumpHeight = 250;
+    double playerJumpY;
 
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
 
-        int jumpHeight = 200;
         playerObject = new Player(player, jumpHeight);
         obstaclesHandler = new Obstacle(plane);
         groundHandler = new Ground(plane);
@@ -55,8 +57,11 @@ public class Controller implements Initializable {
     @FXML
     void pressed(final KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
-            playerObject.jump();
-            time = 0;
+            if (playerObject.isPlayerGrounded(lines, plane)) {
+                playerObject.jump();
+                playerJumpY = player.getY() - jumpHeight;
+                time = 0;
+            }
         }
     }
 
@@ -64,16 +69,27 @@ public class Controller implements Initializable {
     private void update() {
         time++;
         gameTime++;
-        double yDelta = 0.02;
-        if (!playerObject.isPlayerGrounded(lines, plane)) {
-            movePlayerY(yDelta * time);
+        double yDeltaDown = 0.06;
+        double yDeltaUp = -55;
+        if (playerObject.isJumping()) {
+            movePlayerY(yDeltaUp / time);
+            if (player.getY() < playerJumpY) {
+                playerObject.setJumping(false);
+                time = 0;
+            }
+        }
+        if (playerObject.isPlayerGrounded(lines, plane)) {
+            time = 0;
+        }
+        if (!playerObject.isPlayerGrounded(lines, plane) && !playerObject.isJumping()) {
+            movePlayerY(yDeltaDown * time);
         }
         obstaclesHandler.moveObstacles(rectangles);
         groundHandler.moveGround(lines);
 
-//        if (gameTime % 500 == 0) {
-//            lines.addAll(groundHandler.createGround());
-//        }
+        if (gameTime % 300 == 0) {
+            rectangles.addAll(obstaclesHandler.createObstacles());
+        }
 
         if (gameTime % 150 == 0) {
             lines.addAll(groundHandler.createGround());
@@ -87,8 +103,10 @@ public class Controller implements Initializable {
     //Everything called once, at the game start
     private void load() {
         System.out.println("Game starting");
-        rectangles.addAll(obstaclesHandler.createObstacles());
-        lines.addAll(groundHandler.createGround());
+        lines.addAll(new ArrayList<>(Arrays.asList(new Line(0, 550, 300, 550),
+                new Line(301, 550, 600, 550), new Line(601, 550, 900, 550),
+                new Line(901, 550, 1200, 550))));
+        plane.getChildren().addAll(lines);
     }
 
     private void movePlayerY(final double positionChange) {

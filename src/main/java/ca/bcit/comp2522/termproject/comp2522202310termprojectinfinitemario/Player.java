@@ -16,15 +16,17 @@ public class Player {
     public Player(final Rectangle newPlayer, final int newJumpHeight) {
         player = newPlayer;
         jumpHeight = newJumpHeight;
+        jumping = DEFAULT_JUMP;
     }
 
     public void jump() {
-        double movement = -jumpHeight;
-        if (player.getLayoutY() + player.getY() <= jumpHeight) {
-            movement = -(player.getLayoutY() + player.getY());
-        }
-
-        movePlayerY(movement);
+//        double movement = -jumpHeight;
+//        if (player.getLayoutY() + player.getY() <= jumpHeight) {
+//            movement = -(player.getLayoutY() + player.getY());
+//        }
+//
+//        movePlayerY(movement);
+        jumping = true;
     }
 
     public void movePlayerY(final double positionChange) {
@@ -51,4 +53,11 @@ public class Player {
         return playerY >= plane.getHeight();
     }
 
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void setJumping(final boolean jumping) {
+        this.jumping = jumping;
+    }
 }

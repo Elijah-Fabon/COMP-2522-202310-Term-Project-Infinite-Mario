@@ -23,16 +23,24 @@ public class Obstacle {
     public ArrayList<Rectangle> createObstacles() {
 
         int width = 25;
-        double xPos = planeWidth - 100;
-        double space = 200;
-        double recTopHeight = 100;
-        double recBottomHeight = planeHeight - space - recTopHeight;
+        double xPos = planeWidth;
+        double yPos = 450;
+        double height = 100;
+        int wall = random.nextInt(20 - 1) + 1;
+        Rectangle rectangle;
 
-        //                                     x      y   width   height
-        Rectangle rectangleBottom = new Rectangle(xPos, recTopHeight + space, width, recBottomHeight);
+        if (wall <= 5) {
+            rectangle = new Rectangle(xPos, yPos, width, height);
+        } else if (wall > 5 && wall <= 10) {
+            rectangle = new Rectangle(xPos, yPos - 100, width, height);
+        } else if (wall > 10 && wall <= 15) {
+            rectangle = new Rectangle(xPos, yPos - 50, width, height);
+        } else {
+            rectangle = new Rectangle(0, 0, 1, 1);
+        }
 
-        plane.getChildren().addAll(rectangleBottom);
-        return new ArrayList<>(Arrays.asList(rectangleBottom));
+        plane.getChildren().addAll(rectangle);
+        return new ArrayList<>(Arrays.asList(rectangle));
     }
 
 
@@ -41,7 +49,7 @@ public class Obstacle {
         ArrayList<Rectangle> outOfScreen = new ArrayList<>();
 
         for (Rectangle rectangle: obstacles) {
-            moveRectangle(rectangle, - 2.00);
+            moveRectangle(rectangle, -3.00);
 
             if (rectangle.getX() <= -rectangle.getWidth()) {
                 outOfScreen.add(rectangle);
