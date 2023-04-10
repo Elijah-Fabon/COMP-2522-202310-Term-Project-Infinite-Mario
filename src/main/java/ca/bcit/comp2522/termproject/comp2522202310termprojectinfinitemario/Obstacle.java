@@ -4,22 +4,33 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
+/**
+ * Obstacle class.
+ * @author Elijah Fabon
+ * @version 1.0
+ */
 public class Obstacle {
 
     private final AnchorPane plane;
-    private final double planeHeight;
     private final double planeWidth;
     private final Random random = new Random();
 
+    /**
+     * Obstacle constructor.
+     * @param newPlane an AnchorPane class object
+     */
     public Obstacle(final AnchorPane newPlane) {
         plane = newPlane;
-        planeHeight = 600;
         planeWidth = 1000;
     }
 
+    /**
+     * Returns an array list of rectangles in the screen.
+     * @return an array list of rectangles
+     */
     public ArrayList<Rectangle> createObstacles() {
 
         int width = 25;
@@ -40,16 +51,19 @@ public class Obstacle {
         }
 
         plane.getChildren().addAll(rectangle);
-        return new ArrayList<>(Arrays.asList(rectangle));
+        return new ArrayList<>(List.of(rectangle));
     }
 
-
+    /**
+     * Moves obstacles to the left.
+     * @param obstacles an array list of rectangles to move.
+     */
     public void moveObstacles(final ArrayList<Rectangle> obstacles) {
 
         ArrayList<Rectangle> outOfScreen = new ArrayList<>();
 
         for (Rectangle rectangle: obstacles) {
-            moveRectangle(rectangle, -3.00);
+            moveRectangle(rectangle);
 
             if (rectangle.getX() <= -rectangle.getWidth()) {
                 outOfScreen.add(rectangle);
@@ -59,8 +73,8 @@ public class Obstacle {
         plane.getChildren().removeAll(outOfScreen);
     }
 
-    private void moveRectangle(final Rectangle rectangle, final double amount) {
-        rectangle.setX(rectangle.getX() + amount);
+    private void moveRectangle(final Rectangle rectangle) {
+        rectangle.setX(rectangle.getX() - 3.0);
     }
 
 }

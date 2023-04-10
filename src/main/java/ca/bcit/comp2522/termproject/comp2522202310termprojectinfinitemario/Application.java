@@ -6,9 +6,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Application class.
+ * @author Elijah Fabon
+ * @version 1.0
+ */
 public class Application extends javafx.application.Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(final Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getRoot().requestFocus();
@@ -17,7 +22,7 @@ public class Application extends javafx.application.Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch();
     }
 }

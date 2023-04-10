@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class.
+ * @author Elijah Fabon
+ * @version 1.0
+ */
 public class Controller implements Initializable {
-
-    AnimationTimer gameLoop;
 
     @FXML
     private AnchorPane plane;
@@ -24,28 +27,27 @@ public class Controller implements Initializable {
     @FXML
     private Rectangle player;
 
-    double time = 0;
-    double gameTime = 0;
+    private double time = 0;
+    private double gameTime = 0;
     private Player playerObject;
 
     private Obstacle obstaclesHandler;
     private Ground groundHandler;
-    ArrayList<Rectangle> rectangles = new ArrayList<>();
-    ArrayList<Line> lines = new ArrayList<>();
-    int jumpHeight = 300;
-    double playerJumpY;
+    private final ArrayList<Rectangle> rectangles = new ArrayList<>();
+    private final ArrayList<Line> lines = new ArrayList<>();
+    private double playerJumpY;
 
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
 
-        playerObject = new Player(player, jumpHeight);
+        playerObject = new Player(player);
         obstaclesHandler = new Obstacle(plane);
         groundHandler = new Ground(plane);
 
         load();
 
-        gameLoop = new AnimationTimer() {
+        AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(final long l) {
                 update();
@@ -59,18 +61,17 @@ public class Controller implements Initializable {
         if (event.getCode() == KeyCode.SPACE) {
             if (playerObject.isPlayerGrounded(lines, plane)) {
                 playerObject.jump();
+                final int jumpHeight = 300;
                 playerJumpY = player.getY() - jumpHeight;
                 time = 0;
             }
         }
     }
-
-    //Called every game frame
     private void update() {
         time++;
         gameTime++;
-        double yDeltaDown = 0.06;
-        double yDeltaUp = -65;
+        final double yDeltaDown = 0.06;
+        final double yDeltaUp = -65;
         if (playerObject.isJumping()) {
             movePlayerY(yDeltaUp / time);
             if (player.getY() < playerJumpY) {
@@ -99,8 +100,6 @@ public class Controller implements Initializable {
             resetGame();
         }
     }
-
-    //Everything called once, at the game start
     private void load() {
         System.out.println("Game starting");
         lines.addAll(new ArrayList<>(Arrays.asList(new Line(0, 550, 300, 550),
@@ -113,10 +112,6 @@ public class Controller implements Initializable {
         player.setY(player.getY() + positionChange);
     }
 
-//    private void moveRectangle(final Rectangle rectangle, final double amount) {
-//        rectangle.setX(rectangle.getX() + amount);
-//    }
-
     private void resetGame() {
         player.setY(0);
         plane.getChildren().removeAll(rectangles);
@@ -124,35 +119,4 @@ public class Controller implements Initializable {
         gameTime = 0;
         time = 0;
     }
-
-//    private void createObstacles() {
-//
-//        int width = 25;
-//        double xPos = plane.getWidth() + 50;
-//        double space = 200;
-//        double recTopHeight = 100;
-//        double recBottomHeight = plane.getHeight() - space - recTopHeight;
-//
-//        Rectangle rectangleTop = new Rectangle(xPos, 0, width, recTopHeight);
-//        Rectangle rectangleBottom = new Rectangle(xPos, recTopHeight + space, width, recBottomHeight);
-//
-//        rectangles.add(rectangleTop);
-//        rectangles.add(rectangleBottom);
-//        plane.getChildren().addAll(rectangleTop, rectangleBottom);
-//    }
-//
-//    private void moveObstacles(final ArrayList<Rectangle> obstacles) {
-//
-//        ArrayList<Rectangle> outOfScreen = new ArrayList<>();
-//
-//        for (Rectangle rectangle : obstacles) {
-//            moveRectangle(rectangle, - 2.00);
-//
-//            if (rectangle.getX() <= -rectangle.getWidth()) {
-//                outOfScreen.add(rectangle);
-//            }
-//        }
-//        obstacles.removeAll(outOfScreen);
-//        plane.getChildren().removeAll(outOfScreen);
-//    }
 }

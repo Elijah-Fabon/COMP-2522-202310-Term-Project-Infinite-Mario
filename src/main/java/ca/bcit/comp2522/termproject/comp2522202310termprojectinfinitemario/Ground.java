@@ -4,25 +4,38 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
+/**
+ * Ground class.
+ * @author Elijah Fabon
+ * @version 1.0
+ */
 public class Ground {
 
     private final AnchorPane plane;
     private final double planeWidth;
     private final Random random = new Random();
 
-    public Ground(final AnchorPane plane) {
-        this.plane = plane;
-        this.planeWidth = 1000;
+    /**
+     * Ground constructor.
+     * @param newPlane an AnchorPane class object
+     */
+    public Ground(final AnchorPane newPlane) {
+        plane = newPlane;
+        planeWidth = 1000;
     }
 
+    /**
+     * Returns an array list of lines in the screen.
+     * @return an array list of lines
+     */
     public ArrayList<Line> createGround() {
 
         double startXPos = planeWidth;
-        double startEndY = 550;
-        double endXPos = planeWidth + 300;
+        final double startEndY = 550;
+        final double endXPos = planeWidth + 300;
         int platform = random.nextInt(10 - 1) + 1;
         Line ground;
 
@@ -37,16 +50,19 @@ public class Ground {
         }
 
         plane.getChildren().addAll(ground);
-        return new ArrayList<>(Arrays.asList(ground));
+        return new ArrayList<>(List.of(ground));
     }
 
-
+    /**
+     * Moves the ground to the left.
+     * @param ground an array list of rectangles to move.
+     */
     public void moveGround(final ArrayList<Line> ground) {
 
         ArrayList<Line> outOfScreen = new ArrayList<>();
 
         for (Line line: ground) {
-            moveLine(line, -2.00);
+            moveLine(line);
 
             if (line.getStartX() <= -300) {
                 outOfScreen.add(line);
@@ -56,8 +72,8 @@ public class Ground {
         plane.getChildren().removeAll(outOfScreen);
     }
 
-    private void moveLine(final Line line, final double amount) {
-        line.setStartX(line.getStartX() + amount);
-        line.setEndX(line.getEndX() + amount);
+    private void moveLine(final Line line) {
+        line.setStartX(line.getStartX() + -2.0);
+        line.setEndX(line.getEndX() + -2.0);
     }
 }
